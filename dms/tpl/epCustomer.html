@@ -1,0 +1,81 @@
+
+
+	<script>
+		$(document).ready(function(){
+			var typeField = pwrDmsScripts.getFieldByName(item_{$domID},"type");
+			switch(typeField.value){
+				case("PRIVATE"):
+					typeField.value = "PRIVATE";
+					$("#"+item_{$domID}.domFormID+" .section").slideDown();
+					pwrDmsScripts.setItemFields(item_{$domID});
+					break;
+				case("COMPANY"):
+					typeField.value = "COMPANY";
+					$("#"+item_{$domID}.domFormID+" .section").slideDown();
+					pwrDmsScripts.setItemFields(item_{$domID});
+					break;
+				default:
+					$("#"+item_{$domID}.domFormID+" #typeSelection").slideDown();
+					break;
+			}
+		
+		});
+	</script>
+	
+	
+	
+	<div class="field" id="type" style="display:none;"></div>
+	
+	
+	
+	<div class="section" id="typeSelection" style="padding:0;height:60px;">
+		<div style="display:table;margin:30px auto;">
+			<a class="link" href="#">Persona Fisica</a> |
+			<a class="link" href="#">Persona Giuridica</a>
+		</div>
+	</div>
+	
+	<div class="section" style="background-image:url('./images/section_person.png');">
+		<div class="field" id="firstName"		style="width:362px;"></div>
+		<div class="field" id="lastName"		style="width:363px;"></div>
+		
+		<div class="spacer"></div>
+		
+		<div class="field" id="gender"			style="width:180px;"></div>
+		<div class="field" id="code"			style="width:545px;"></div>
+		<div class="clear"></div>
+		<div class="field" id="birthDate"		style="width:180px;"></div>
+		<div class="field" id="birthLocation"	style="width:545px;"></div>
+		
+		<div class="spacer"></div>
+	
+		<div class="field" id="documentType"			style="width:250px;"></div>
+		<div class="field" id="documentNumber"			style="width:290px;"></div>
+		<div class="field" id="documentReleaseDate"		style="width:180px;"></div>
+		
+		<div class="spacer"></div>
+	
+		<div class="field" id="job"				style="width:400px;"></div>
+			
+		<div class="clear"></div>
+	</div>
+	
+	<div class="section" style="background-image:url('./images/section_place.png');">
+		<div class="field" id="homeAddress"		style="width:730px;"></div>
+		<div class="clear"></div>
+		<div class="field" id="homeCap"			style="width:100px;"></div>
+		<div class="field" id="homeCity"		style="width:625px;"></div>
+		<div class="clear"></div>
+	</div>
+	
+	<div class="section" style="background-image:url('./images/section_contacts.png');">
+		<div class="field" id="contactMobile"		style="width:240px;"></div>
+		<div class="field" id="contactTelephone"	style="width:240px;"></div>
+		<div class="field" id="contactFax"			style="width:240px;"></div>
+		<div class="clear"></div>
+		<div class="field" id="contactEmail"		style="width:400px;"></div>
+		<div class="clear"></div>
+	</div>
+	
+	<div class="clear"></div>
+	

@@ -1,0 +1,42 @@
+
+	<div class="frame">
+		<div class="title">
+			Bentornato <b>{$_epUser->data[user_name]}</b>, oggi ci sono:
+		</div>
+		
+		<a href="javascript:loadModule('calendar');">
+			<div class="home_info element" style="margin-left:0;">
+				<div class="value">99</div>
+				<div class="label">Scadenze in Agenda</div>
+			</div>
+		</a>
+		<a href="javascript:loadModule('calendar');">
+			<div class="home_info element {if="$notesCount==0"}none{/if}">
+				<div class="value">{$notesCount}</div>
+				<div class="label">Promemoria in Agenda</div>
+			</div>
+		</a>
+		<a href="#">
+			<div class="home_info element">
+				<div class="value">99</div>
+				<div class="label">Pratiche da Approvare</div>
+			</div>
+		</a>
+		<a href="#">
+			<div class="home_info element">
+				<div class="value">99</div>
+				<div class="label">Messaggi non Letti</div>
+			</div>
+		</a>
+			
+		<div style="clear:both;"></div>
+	</div>
+	
+	<div class="frame">
+		<div class="title">
+			Attività di Interesse
+		</div>
+		
+		
+		
+	</div>

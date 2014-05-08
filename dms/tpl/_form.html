@@ -1,0 +1,66 @@
+	
+	
+		<script>
+			var item_{$domID} = {
+				ID:				"{$object->ID}",
+				className:		"{$object->className}",
+				domID:			"{$domID}",
+				domFrameID:		"frame_{$domID}",
+				domFormID:		"form_{$domID}",
+				
+				fieldsList:		[
+					{loop="$object->formFieldsList"}
+					{
+						name:"{$value->name}",
+						type:"{$value->type}",
+						label:"{$value->formLabel}",
+						value:"{$value->startingValue}",
+						isNeeded:{if="$value->formIsNeeded"}true{else}false{/if},
+						isMultiple:{if="$value->formIsMultiple"}true{else}false{/if},
+						selectOptionsList:[{loop="$value->selectOptionsList"}
+											{value:"{$value.value}",label:"{$value.label}"},
+										{/loop}],
+					},
+					{/loop}
+				],
+				
+				load:			function(){
+									$("#"+this.domFrameID+" > .title").text("{$object->formTitle}");
+									$("#"+this.domFrameID+" > .title").slideDown();
+									$("#"+this.domFrameID+" #save").slideDown();
+									$("#"+this.domFrameID+" #reload").slideDown();
+									if(this.ID==""){
+										$("#"+this.domFrameID+" #delete").slideUp();
+									}else{
+										$("#"+this.domFrameID+" #delete").slideDown();
+									}	
+									pwrScripts.loadInto("dms/"+this.className+".php?i="+this.domID,this.domFormID);
+								},
+				change:			function(){
+									//
+								},
+				reload:		function(){
+									$("#"+this.domFrameID+" #save").slideUp();
+									$("#"+this.domFrameID+" #reload").slideUp();
+									$("#"+this.domFrameID+" #delete").slideUp();
+									pwrScripts.loadInto("dms/_form.php?i="+this.domID+"&c="+this.className+"&id="+this.ID,"formContainer_"+this.domID);
+								},
+				save:			function(){
+									$("#"+this.domFrameID+" #save").slideUp();
+									$("#"+this.domFrameID+" #reload").slideUp();
+									$("#"+this.domFrameID+" #delete").slideUp();
+									pwrDmsScripts.saveItem(this,"dms/_formSave.php?c="+this.className+"&id="+this.ID);
+								},
+				close:			function(){
+									//
+								},
+			};
+			
+			$(document).ready(function(){
+				item_{$domID}.load();
+			});
+		</script>
+		<div id="form_{$domID}">
+			<!-- FORM TO BE LOADED HERE -->
+		</div>
+		

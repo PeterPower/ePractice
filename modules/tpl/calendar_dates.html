@@ -1,0 +1,41 @@
+
+	<script>
+		function loadDateDetails(day){ 
+			pwrScripts.loadInto("modules/calendar_details.php?d="+day+"&m={$selectedMonth}$y={$selectedYear}","details");
+			
+			$(".day").each(function(){
+				if($(this).text()==day){
+					$(this).parent().addClass("selected");
+				}else{
+					$(this).parent().removeClass("selected");
+				}
+			});
+		}
+	</script>
+	
+	<div class="week_day element">LUN</div>
+	<div class="week_day element">MAR</div>
+	<div class="week_day element">MER</div>
+	<div class="week_day element">GIO</div>
+	<div class="week_day element">VEN</div>
+	<div class="week_day element">SAB</div>
+	<div class="week_day element">DOM</div>
+
+	{loop="$dates"}
+		{if="$value[day]"}
+			<a href="javascript:loadDateDetails({$value[day]});">
+				<div class="date element {if="$value[day]==$selectedDay"}selected{/if}">
+					<div class="day">{$value[day]}</div>
+					<div class="label">
+						<div {if="$value[alarmsCount]==0"}class="none"{/if}>scadenze <b>{$value[alarmsCount]}</b></div>
+						<div {if="$value[notesCount]==0"}class="none"{/if}>promem. <b>{$value[notesCount]}</b></div>
+					</div>
+				</div>
+			</a>
+		{else}
+			<div class="blank">
+			</div>
+		{/if}
+	{/loop}
+		
+	<div style="clear:both;"></div>

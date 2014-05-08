@@ -1,0 +1,1 @@
+<?php	///// SYSTEM REQUIREMENT (do not change)	require('../includes/ep.page.head.include.php');			///// BEGIN: CONTENT CREATION (built your page here)		require('./includes/ep.dms.include.php');		$object = new $_GET["c"]($_epDatabase);	$object->ID = $_GET["id"];	$object->saveForm($_POST);		echo $object->ID;		///// END: CONTENT CREATION ?>
