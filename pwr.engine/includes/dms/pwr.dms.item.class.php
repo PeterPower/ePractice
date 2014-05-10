@@ -46,6 +46,33 @@
 		}
 		
 		
+		///// DATABASE METHODS
+		public function createTable(){
+		
+			//$this->tablePrimaryKey = "customer_ID";
+			//$this->tableFieldPrefix = "customer";
+				
+			$query = "CREATE TABLE IF NOT EXISTS ".$this->_database->getTableName($this->tableName)." (
+						sys_ID		 				varchar(32),
+						sys_addingTimestamp				int(11) 	NOT NULL,
+						sys_addingUserID				int(11) 	NOT NULL,
+						sys_editingTimestamp			int(11),
+						sys_editingUserID				int(11),
+						".$this->tablePrimaryKey."	int(11)		NOT NULL AUTO_INCREMENT, ";
+			if($this->formFieldsList)foreach($this->formFieldsList as $k => $field){
+				switch($field->type){
+					default:
+						$query .= $this->tableFieldPrefix."_".$field->name." varchar(".$field->formMaxSize."), ";
+				}
+			}
+		
+			$query .= " PRIMARY KEY (".$this->tablePrimaryKey.")
+						) AUTO_INCREMENT=1;";
+						
+			$this->_database->doQuery($query);
+		}
+		
+		
 		///// ARCHIVE METHODS
 		public function setArchive(){
 			$this->setArchiveRecordsList();
@@ -63,6 +90,7 @@
 		public function setForm(){
 			$this->setFormRecord();
 			$this->setFormFieldsList();
+			//$this->createTable();
 			$this->setFormFieldsValues();
 		}
 		
@@ -86,7 +114,7 @@
 			return false;
 		}
 		
-		public function saveForm($dataList){
+		public function saveForm($dataList,$user=0){
 			$fieldsToSave = array();
 			
 			if($dataList)foreach($dataList as $k => $data){
@@ -94,9 +122,9 @@
 			}
 			
 			if($this->ID!=""){
-				$this->_database->updateRecord($this->tableName,$this->tablePrimaryKey,$this->ID,$fieldsToSave);
+				$this->_database->updateRecord($this->tableName,$this->tablePrimaryKey,$this->ID,$fieldsToSave,$user->ID);
 			}else{
-				$this->ID = $this->_database->newRecord($this->tableName,$this->tablePrimaryKey,$fieldsToSave);
+				$this->ID = $this->_database->newRecord($this->tableName,$this->tablePrimaryKey,$fieldsToSave,$user->ID);
 			}
 		}
 		

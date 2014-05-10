@@ -35,23 +35,23 @@
 				<div id="company" style="background-image:url('images/company/header_company.png');"></div>
 				{if="$_epUser->isLogged"}
 					<div id="user">
-						utente: {$_epUser->data[user_name]} [<a href="?a=logout">ESCI</a>]
+						utente: {$_epUser->data[user_firstName]} {$_epUser->data[user_lastName]} [<a href="?a=logout">ESCI</a>]
 					</div>
 				{/if}
 			</div>
 		</header>
-		{if="$_epUser->isLogged"}
-			<nav>
+		<nav>
+			{if="$_epUser->isLogged"}
 				<ul>
 					<li><a href="index.php">Home</a></li>
 					<li><a href="javascript:loadModule('modules/calendar');">Agenda</a></li>
 					<li><a href="javascript:loadModule('dms/_archive','c=epCustomer');">Archivio Clienti</a></li>
 				</ul>
-			</nav>
-		{/if}
+			{/if}
+		</nav>
 			
 		<section>
-			<div id="module_container" style="margin: 0 auto;">
+			<div id="module_container">
 				{$_section}
 			</div>
 		</section>

@@ -175,29 +175,26 @@
 		
 		
 		
-		
-		public function updateRecord($tableName,$idField,$id,$data){
+		public function updateRecord($tableName,$idField,$id,$data,$userID=0){
 			$fullTableName = $this->dbc_tag.$tableName;
 			
 			unset($data['sys_ownerID']);
 			if($this->getFirstRecordBySql("SELECT * FROM ".$fullTableName." WHERE ".$idField."='".$id."'")){
 				$columns = $this->getAllRecordsBySql("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='".$this->dbc_name."' AND TABLE_NAME='".$fullTableName."'");
-				$isFirst = true;
-				$querySET = "";
+				$querySET = "sys_editingTimestamp='".time()."',
+							sys_editingUserID='".$userID."'";
 				foreach($columns as $k =>$column){
 					if(array_key_exists($column['COLUMN_NAME'],$data)){
-						if(!$isFirst) $querySET .= ", ";
-						$querySET .= $column['COLUMN_NAME']."='".str_replace("'","\\'",$data[$column['COLUMN_NAME']])."'";
-						$isFirst = false;
+						$querySET .= ", ".$column['COLUMN_NAME']."='".str_replace("'","\\'",$data[$column['COLUMN_NAME']])."'";
 					}
 				}
-				if(!$isFirst) $this->doQuery("UPDATE ".$fullTableName." SET ".$querySET." WHERE ".$idField."='".$id."'");
+				$this->doQuery("UPDATE ".$fullTableName." SET ".$querySET." WHERE ".$idField."='".$id."'");
 				//echo "<q>UPDATE ".$fullTableName." SET ".$querySET." WHERE ".$idField."='".$id."'</q>";
 				return $id;
 			}
 		}
 		
-		public function newRecord($tableName,$idField,$data){
+		public function newRecord($tableName,$idField,$data,$userID=0){
 			$fullTableName = $this->dbc_tag.$tableName;
 			
 			$dbc_tag = $this->dbc_tag;
@@ -205,21 +202,16 @@
 			$columns = $this->getAllRecords("COLUMN_NAME","INFORMATION_SCHEMA.COLUMNS","TABLE_SCHEMA='".$this->dbc_name."' AND TABLE_NAME='".$fullTableName."'");
 			$this->dbc_tag = $dbc_tag;
 			
-			$isFirst = true;
 			$sysID = md5($fullTableName.time());
-			$queryFIELDS = "sys_ID";
-			$queryVALUES = "'".$sysID."'";
+			$queryFIELDS = "sys_ID, sys_addingTimestamp, sys_addingUserID";
+			$queryVALUES = "'".$sysID."', '".time()."', '".$userID."'";
 			foreach($columns as $k =>$column){
 				if(array_key_exists($column['COLUMN_NAME'],$data) && $column['COLUMN_NAME']!=$idField){
-					$queryFIELDS .= ",";
-					$queryVALUES .= ",";
-					
-					$queryFIELDS .= $column['COLUMN_NAME'];
-					$queryVALUES .= "'".str_replace("'","\\'",$data[$column['COLUMN_NAME']])."'";
-					$isFirst = false;
+					$queryFIELDS .= ", ".$column['COLUMN_NAME'];
+					$queryVALUES .= ", '".str_replace("'","\\'",$data[$column['COLUMN_NAME']])."'";
 				}
 			}
-			if(!$isFirst) $this->doQuery("INSERT INTO ".$fullTableName." (".$queryFIELDS.") VALUES (".$queryVALUES.")");
+			$this->doQuery("INSERT INTO ".$fullTableName." (".$queryFIELDS.") VALUES (".$queryVALUES.")");
 			
 			$item = $this->getFirstRecord("*",$tableName,"sys_ID='".$sysID."'");
 			$id = $item[$idField];

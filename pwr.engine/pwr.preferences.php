@@ -16,7 +16,7 @@
 
 	///// DATABASE
 	$_PREF["DB"]["HOST"]		= "127.0.0.1";
-	$_PREF["DB"]["NAME"]		= "sql541410_3";
+	$_PREF["DB"]["NAME"]		= "db_ePractice";
 	$_PREF["DB"]["USERNAME"]	= "root";
 	$_PREF["DB"]["PASSWORD"]	= "";
 	//$_PREF["DB"]["HOST"]		= "62.149.150.155";
@@ -24,7 +24,7 @@
 	//$_PREF["DB"]["USERNAME"]	= "Sql541410";
 	//$_PREF["DB"]["PASSWORD"]	= "d9ed4665";
 	$_PREF["DB"]["DEBUG"]		= true;
-	$_PREF["DB"]["TAG"]			= "ea_";
+	$_PREF["DB"]["TAG"]			= "ep_";
 	
 	///// MISC
 	$_PREF["MISC"]["MONTH_NAMES"]	=  array("","Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno","Luglio","Agosto","Settembre","Ottobre","Novembre","Dicembre");
